@@ -3,7 +3,7 @@ Copyright (c) 2021 Tilo van Ekeris / TMDT, University of Wuppertal
 Distributed under the MIT license, see the accompanying
 file LICENSE or https://opensource.org/licenses/MIT
 """
-
+import pywintypes
 import win32com.client as win32
 
 from .error_code import ErrorCode

@@ -17,6 +17,8 @@ Solution based on:
 https://stackoverflow.com/questions/52889704/python-win32com-excel-com-model-started-generating-errors
 """
 
+import pywintypes
+
 import win32com
 import shutil
 

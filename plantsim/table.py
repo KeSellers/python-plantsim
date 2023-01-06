@@ -19,7 +19,7 @@ class Table:
         """
         self._rows = []
         self._rows_coldict = []
-
+        print(plantsim.get_value(f'{table_name}'))
         row_count = plantsim.get_value(f'{table_name}.YDim')
         col_count = plantsim.get_value(f'{table_name}.XDim')
         if row_count > 0 and col_count > 0:
