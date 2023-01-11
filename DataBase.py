@@ -19,6 +19,7 @@ Einzelstation = {
                         "Rüstzeit" ,
                         "Erholzeit" ,
                         "Zykluszeit" ,
+                   
                     ],
             "PackstationRitzelwellen":{  "name":"PackstationRitzelwellen",
                     "origin" : "Lager",
