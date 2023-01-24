@@ -11,30 +11,37 @@ from typing import List, Union, Dict
 
 class Table:
 
-    def __init__(self, plantsim, table_name):
+    def __init__(self, plantsim, table_name,header=[]):
         """
         Table mapping for PlantSim Tables (e.g., DataTable, ExplorerTable)
         :param plantsim: Plantsim instance (with loaded model) that is queried
         :param table_name: The object name within Plantsim relative to the current path context
         """
+        self.Header = header
         self._rows = []
         self._rows_coldict = []
-        print(plantsim.get_value(f'{table_name}'))
         row_count = plantsim.get_value(f'{table_name}.YDim')
         col_count = plantsim.get_value(f'{table_name}.XDim')
+        self.set_headers(col_count)
         if row_count > 0 and col_count > 0:
-            for row_idx in range(row_count + 1):
+            for row_idx in range(1,row_count):
                 row = []
                 row_coldict = {}
-                for col_idx in range(col_count + 1):
+                for col_idx in range(1,col_count+1):
                     cell_value = plantsim.get_value(f'{table_name}[{col_idx}, {row_idx}]')
                     row.append(cell_value)
                     if row_idx > 0:
-                        col_header = self.rows[0][col_idx]
+                        col_header = self.rows[0][col_idx-1]
                         row_coldict[col_header] = cell_value
                 self._rows.append(row)
                 if row_idx > 0:
                     self._rows_coldict.append(row_coldict)
+    def set_headers(self,col_count):
+        assert len(self.Header) == col_count
+
+        self._rows.append(self.Header) 
+
+
 
     @property
     def rows(self) -> List[List]:
@@ -149,9 +156,12 @@ class Table:
         Returns string representation via Texttable
         :return: string representation of table
         """
+        rows = self.rows
         if self.row_count > 0:
             texttable = Texttable(200)
+            
             texttable.add_rows(self.rows)
+            texttable.header = rows[0]
             texttable.set_deco(Texttable.HEADER)
             return texttable.draw()
         else:
